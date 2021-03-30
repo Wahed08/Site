@@ -2,11 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const db = require('./config/db_config');
 const userRoutes = require('./routes/userRoutes');
 const HttpError = require('./model/http-error');
+require('dotenv').config();
 
 const app = express();
+
 //middleware
 app.use(bodyParser.json());
 app.use(cors());
@@ -32,8 +33,8 @@ app.use((error, req, res, next) => {
   });
 
 //connect to db
-const DB_URL = db.URL;
-mongoose.connect(DB_URL, {useNewUrlParser: true, useUnifiedTopology: true})
+const Database_URL = process.env.DB_URL;
+mongoose.connect(Database_URL, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => app.listen(5000))
 .then(() => console.log("Database Connected"))
 .catch(err => {

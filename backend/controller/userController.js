@@ -1,10 +1,18 @@
 const User = require('../model/userModel');
 const bcrypt = require('bcryptjs');
 const HttpError = require('../model/http-error');
+const { validationResult } = require('express-validator');
 
 //user SignUp
 const signUp = async (req, res, next) => {
-
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        const error = new HttpError(
+            'Invalid inputs passed, please check your data',
+            422
+        );
+        return next(error);
+    }
     const { name, email, password } = req.body;
 
     let existingUser;
