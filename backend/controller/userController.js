@@ -1,70 +1,128 @@
-const User = require('../model/userModel');
-const bcrypt = require('bcryptjs');
-const HttpError = require('../model/http-error');
-const { validationResult } = require('express-validator');
+const User = require("../model/userModel");
+const bcrypt = require("bcryptjs");
+const HttpError = require("../model/http-error");
+const { validationResult } = require("express-validator");
 
 //user SignUp
 const signUp = async (req, res, next) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        const error = new HttpError(
-            'Invalid inputs passed, please check your data',
-            422
-        );
-        return next(error);
-    }
-    const { name, email, password } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid inputs passed, please check your data",
+      422
+    );
+    return next(error);
+  }
+  const { name, email, password, password2 } = req.body;
 
-    let existingUser;
-    try{
-        existingUser = await User.findOne({email: email});
-    }catch(err){
-        const error = new HttpError('Signing Up failed, Please try again later',500);
-        return next(error);
-    }
+  //password match
+  if(password !== password2){
+    const error = new HttpError(
+      'Password does not match, please try again',
+      423
+    );
+    return next(error);
+  }
+  //checking existing user
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError(
+      "Signing Up failed, Please try again later",
+      500
+    );
+    return next(error);
+  }
 
-    if(existingUser){
-        const error = new HttpError(
-            'User already exists, please create new one',
-            422
-        )
-        return next(error);
-    }
+  if (existingUser) {
+    const error = new HttpError(
+      "User already exists, please create new one",
+      422
+    );
+    return next(error);
+  }
 
-    let hashedPassword;
-    try{
-        hashedPassword = await bcrypt.hash(password, 12);
-    }catch(err){
-        const error = new HttpError(
-            'Could not create user, please try again later',
-            500
-            );
-        return next(error);
-    }
+  // hashed password
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    const error = new HttpError(
+      "Could not create user, please try again later",
+      500
+    );
+    return next(error);
+  }
 
-    //create User
-    const createUser = new User({
-        name,
-        email,
-        password: hashedPassword,
-    });
+  //create User
+  const createUser = new User({
+    name,
+    email,
+    password: hashedPassword,
+  });
 
-    try{
-        await createUser.save();
-    }catch(err){
-        const error = new HttpError(
-            'Signing Up failed, please try again later',
-            500
-        );
-        return next(error);
-    }
+  // save to db
+  try {
+    await createUser.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Signing Up failed, please try again later",
+      501
+    );
+    return next(error);
+  }
 
-    res
-    .status(201)
-    .json({msg: "Successful"});
+  res.status(201).json({ msg: "Successful" });
+};
 
-}
+// log In
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError(
+      "Logging in failed, please try again later",
+      500
+    );
+    return next(error);
+  }
+
+  if (!existingUser) {
+    const error = new HttpError(
+      "Invalid credentials, could not log you in",
+      401
+    );
+    return next(error);
+  }
+
+  //password compare
+  let isValidPassword = false;
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (err) {
+    const error = new HttpError(
+      "Could not log you in, please check your data and try again",
+      500
+    );
+    return next(error);
+  }
+
+  if (!isValidPassword) {
+    const error = new HttpError(
+      "Invalid Credentials, could not log you in",
+      401
+    );
+    return next(error);
+  }
+
+  res.status(201).json({msg: "Logged In"});
+};
 
 module.exports = {
-    signUp
-}
+  signUp,
+  login,
+};

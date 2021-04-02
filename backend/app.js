@@ -32,10 +32,13 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || "An unknown error occurred!" });
   });
 
-//connect to db
+
 const Database_URL = process.env.DB_URL;
+const port = process.env.PORT
+
+//connect to db
 mongoose.connect(Database_URL, {useNewUrlParser: true, useUnifiedTopology: true})
-.then(() => app.listen(5000))
+.then(() => app.listen(port))
 .then(() => console.log("Database Connected"))
 .catch(err => {
     console.log(err);
