@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 
 const LogIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const history = useHistory();
 
-  const formHandler = async (e) => {
+  const HandleSubmit = async (e) => {
     e.prevenrDefault();
 
     const post = { email, password };
     console.log(post);
+
     try {
       await fetch("http://localhost:5000/api/users/login", {
         method: "POST",
@@ -19,11 +21,13 @@ const LogIn = () => {
         body: JSON.stringify(post),
       })
         .then(() => {
-          history.push("/");
+          history.push('/');
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((res) => {
+          if(!res.ok){
+              throw new Error("This is not happening, Why?");
+          }
+        })
     } catch (err) {}
   };
 
@@ -36,15 +40,15 @@ const LogIn = () => {
               <i className="fas fa-sign-in-alt"></i> Login
             </h1>
 
-            <form onSubmit={formHandler}>
+            <form onSubmit={HandleSubmit}>
               <div className="form-group">
                 <label for="email">Email</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
-                  className="form-control"
                   required
+                  className="form-control"
                   placeholder="Enter Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -56,14 +60,14 @@ const LogIn = () => {
                   type="password"
                   id="password"
                   name="password"
-                  className="form-control"
                   required
+                  className="form-control"
                   placeholder="Enter Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <button type="submit" className="btn btn-primary btn-block">
+             <button type="submit" className="btn btn-primary btn-block">
                 Login
               </button>
             </form>

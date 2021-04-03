@@ -8,10 +8,13 @@ import {
 import Login from "./components/logIn";
 import Signup from "./components/signUp";
 import Home from './components/Home';
+import NavBar from './components/NavBar/NavBar';
+import Footer from './components/footer/footer';
 
 function App() {
   return (
     <Router>
+      <NavBar/>
       <Switch>
       <Route exact path="/">
           <Home />
@@ -27,6 +30,7 @@ function App() {
 
         <Redirect to="/" />
       </Switch>
+      <Footer/>
     </Router>
   );
 }

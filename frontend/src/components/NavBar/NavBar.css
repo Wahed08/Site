@@ -1,0 +1,38 @@
+.navbar {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    border-bottom: 3px solid #f2f2f2;
+  }
+  img {
+    color: #f1356d;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+  }
+
+  .navbar .links {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin: 0
+  }
+  .navbar .profile{
+      display: inline-block;
+      margin-left: -400px;
+  }
+  .navbar a {
+    margin-left: 16px;
+    text-decoration: none;
+    padding: 6px;
+  }
+  .navbar a:hover {
+    color: #f1356d;
+  }
+  .profile button{
+      border: 0;
+      margin: -10px;
+  }
+ 

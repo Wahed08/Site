@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 const SignUp = () => {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,8 +12,10 @@ const SignUp = () => {
 
   const formHandler = async (e) => {
     e.preventDefault();
+    
     const post = { name, email, password, password2 };
     console.log(post);
+
     try {
       await fetch("http://localhost:5000/api/users/signup", {
         method: "POST",
