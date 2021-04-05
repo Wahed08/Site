@@ -1,10 +1,9 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 const LogIn = () => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const history = useHistory();
 
@@ -21,13 +20,13 @@ const LogIn = () => {
         body: JSON.stringify(post),
       })
         .then(() => {
-          history.push('/');
+          history.push("/");
         })
         .then((res) => {
-          if(!res.ok){
-              throw new Error("This is not happening, Why?");
+          if (!res.ok) {
+            throw new Error("This is not happening, Why?");
           }
-        })
+        });
     } catch (err) {}
   };
 
@@ -67,7 +66,7 @@ const LogIn = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-             <button type="submit" className="btn btn-primary btn-block">
+              <button type="submit" className="btn btn-primary btn-block">
                 Login
               </button>
             </form>

@@ -1,3 +1,7 @@
+.clr{
+    background-color: whitesmoke;
+}
+
 .navbar {
     padding: 20px;
     display: flex;

@@ -5,13 +5,14 @@ import image from "../../img/wahed.png";
 
 const NavBar = () => {
   return (
+      <div className="clr">
     <div className="container">
       <nav className="navbar">
         <Link to="/">
           <img src={image} alt="wahed" />
         </Link>
         <div className="profile">
-        <Link to="/">
+          <Link to="/">
             <button className="btn btn-outline-secondary ">Home</button>
           </Link>
           <Link to="/">
@@ -33,6 +34,7 @@ const NavBar = () => {
           </Link>
         </div>
       </nav>
+    </div>
     </div>
   );
 };
