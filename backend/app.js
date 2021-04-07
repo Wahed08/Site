@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
+const postRoutes = require('./routes/postRoutes');
 const HttpError = require('./model/http-error');
 require('dotenv').config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 
 //routes
 app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
 
 app.use((req, res, next) => {
     const error = new HttpError(
