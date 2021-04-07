@@ -15,10 +15,10 @@ const NavBar = () => {
           <Link to="/">
             <button className="btn btn-outline-secondary ">Home</button>
           </Link>
-          <Link to="/">
+          <Link to="/posts">
             <button className="btn btn-outline-secondary">About</button>
           </Link>
-          <Link to="/">
+          <Link to="/create">
             <button className="btn btn-outline-secondary">Contact Us</button>
           </Link>
           <Link to="/">

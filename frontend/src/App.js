@@ -11,6 +11,8 @@ import Home from "./components/Home";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/footer/footer";
 import Layout from "./components/Layout/Layout";
+import Create from './components/views/create';
+import Posts from './components/views/PostCard';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 const theme = createMuiTheme({
@@ -40,6 +42,14 @@ function App() {
 
             <Route path="/login">
               <Login />
+            </Route>
+
+            <Route path="/create">
+              <Create/>
+            </Route>
+
+            <Route path="/posts">
+              <Posts/>
             </Route>
 
             <Redirect to="/" />

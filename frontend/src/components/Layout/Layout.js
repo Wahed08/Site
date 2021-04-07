@@ -12,11 +12,10 @@ const useStyles = makeStyles({
   },
   drawer: {
     width: drawerWidth,
-    
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: 'teal'
+    backgroundColor: 'aliceblue'
   },
   root: {
     display: "flex"
