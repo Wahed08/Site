@@ -12,7 +12,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/footer/footer";
 import Layout from "./components/Layout/Layout";
 import Create from './components/views/create';
-import Posts from './components/views/PostCard';
+import Posts from './components/views/Posts';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 const theme = createMuiTheme({

@@ -5,8 +5,8 @@ import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
-import { makeStyles } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+// import { makeStyles } from "@material-ui/core";
+// import { blue } from "@material-ui/core/colors";
 
 // const useStyles = makeStyles({
 //   avatar: {
@@ -19,7 +19,7 @@ const PostCard = (props) => {
 
   return (
     <div>
-    <Card elevation={1}>
+    <Card elevation={5}>
       <CardHeader
         action={
           <IconButton onClick={() => props.handleDelete(props.key)}>
