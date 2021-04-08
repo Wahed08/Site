@@ -37,7 +37,7 @@ const Posts = () => {
 
   return (
     <Container>
-      <Grid container spacing={3}>
+      <Grid container spacing={4}>
         {!isLoading &&
           posts &&
           posts.map((post) => (

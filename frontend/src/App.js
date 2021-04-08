@@ -14,8 +14,12 @@ import Layout from "./components/Layout/Layout";
 import Create from './components/views/create';
 import Posts from './components/views/Posts';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { blue } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
+  palette:{
+   primary: blue
+  },
   typography: {
     fontFamily: 'Quicksand',
     fontWeightLight: 400,
