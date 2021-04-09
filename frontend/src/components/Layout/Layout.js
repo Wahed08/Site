@@ -6,7 +6,12 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import { AddCircleOutlineOutlined, SubjectOutlined, AccountCircleOutlined, ExitToAppOutlined } from "@material-ui/icons";
+import {
+  AddCircleOutlineOutlined,
+  SubjectOutlined,
+  AccountCircleOutlined,
+  ExitToAppOutlined,
+} from "@material-ui/icons";
 import { useHistory, useLocation } from "react-router-dom";
 
 const drawerWidth = 130;
@@ -26,14 +31,14 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
   },
-  title:{
+  title: {
     paddingTop: "20px",
     paddingLeft: "17px",
-    paddingBottom: "50px"
+    paddingBottom: "50px",
   },
-  active:{
-    background: "beige"
-  }
+  active: {
+    background: "beige",
+  },
 });
 
 const Layout = ({ children }) => {
@@ -81,10 +86,12 @@ const Layout = ({ children }) => {
         <List>
           {menuItems.map((item) => (
             <ListItem
-            button
-            key={item.text}
-            onClick={()=>history.push(item.path)}
-            className={location.pathname === item.path ? classes.active : null}
+              button
+              key={item.text}
+              onClick={() => history.push(item.path)}
+              className={
+                location.pathname === item.path ? classes.active : null
+              }
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />

@@ -10,7 +10,7 @@ const Footer = () => {
             <div className="row">
               <div className="col-md-12 py-5">
                 <div className="mb-2 flex-center">
-                  <a href='https://www.facebook.com/mohammad.farhad.988?lst=100007808041474%3A100007808041474%3A1537619482'>
+                  <a href="https://www.facebook.com/mohammad.farhad.988?lst=100007808041474%3A100007808041474%3A1537619482">
                     <i className="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"></i>
                   </a>
 

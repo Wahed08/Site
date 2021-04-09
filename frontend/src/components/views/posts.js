@@ -28,7 +28,6 @@ const Posts = () => {
     fetchPost();
   }, []);
 
-
   const handleDelete = async (id) => {
     await fetch("http://localhost:5000/api/posts/" + id, {
       method: "DELETE",
@@ -39,28 +38,28 @@ const Posts = () => {
 
   return (
     <React.Fragment>
-    <Container>
-      {isLoading && (
-        <div className="center">
-          <LoadingSpinner asOverlay />
-        </div>
-      )}
-      <Grid container spacing={4}>
-        {!isLoading &&
-          posts &&
-          posts.map((post) => (
-            <Grid item xs={12} md={6} lg={4} key={post.id}>
-              <PostCard
-                key={post.id}
-                title={post.title}
-                postdetails={post.details}
-                author={post.author}
-                handleDelete={handleDelete}
-              />
-            </Grid>
-          ))}
-      </Grid>
-    </Container>
+      <Container>
+        {isLoading && (
+          <div className="center">
+            <LoadingSpinner asOverlay />
+          </div>
+        )}
+        <Grid container spacing={4}>
+          {!isLoading &&
+            posts &&
+            posts.map((post) => (
+              <Grid item xs={12} md={6} lg={4} key={post.id}>
+                <PostCard
+                  key={post.id}
+                  title={post.title}
+                  postdetails={post.details}
+                  author={post.author}
+                  handleDelete={handleDelete}
+                />
+              </Grid>
+            ))}
+        </Grid>
+      </Container>
     </React.Fragment>
   );
 };
