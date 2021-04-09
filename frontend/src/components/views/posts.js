@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import PostCard from "./PostCard";
+import LoadingSpinner from "../util/LoadingSpinner";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -27,6 +28,7 @@ const Posts = () => {
     fetchPost();
   }, []);
 
+
   const handleDelete = async (id) => {
     await fetch("http://localhost:5000/api/posts/" + id, {
       method: "DELETE",
@@ -36,7 +38,13 @@ const Posts = () => {
   };
 
   return (
+    <React.Fragment>
     <Container>
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner asOverlay />
+        </div>
+      )}
       <Grid container spacing={4}>
         {!isLoading &&
           posts &&
@@ -53,6 +61,7 @@ const Posts = () => {
           ))}
       </Grid>
     </Container>
+    </React.Fragment>
   );
 };
 

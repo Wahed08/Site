@@ -29,8 +29,8 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div class="flex-center">
-            © 2021 Copyright: WAHED's; All right reserved
+          <div className="flex-center">
+            © 2021 Copyright: WAHED'S; All right reserved
           </div>
         </footer>
       </div>

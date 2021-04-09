@@ -12,12 +12,14 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import { useHistory } from "react-router-dom";
 
+
 const useStyles = makeStyles({
   field: {
     marginTop: 20,
     marginBottom: 20,
     display: "block",
   },
+
 });
 
 export default function Create() {
@@ -46,16 +48,22 @@ export default function Create() {
     if (author === "") {
         setAuthorError(true);
       }
-    if (title && details && author) {
-      fetch("http://localhost:5000/api/posts/create", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ title, details, author, category }),
-      }).then(() => history.push("/posts"));
-    }
+      try{
+        if (title && details && author) {
+          fetch("http://localhost:5000/api/posts/create", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({ title, details, author, category }),
+          }).then(() => history.push("/posts"));
+        }
+      }catch(err){
+        throw err;
+      }
   };
 
   return (
+    
+    <div className="container">
     <Container size="sm">
       <Typography
         variant="h4"
@@ -119,6 +127,7 @@ export default function Create() {
         </FormControl>
 
         <Button
+          className={classes.align}
           type="submit"
           color="primary"
           variant="contained"
@@ -128,5 +137,6 @@ export default function Create() {
         </Button>
       </form>
     </Container>
+    </div>
   );
 }
