@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { AuthContext } from '../components/context/auth-context';
 
 const SignUp = () => {
 
@@ -7,6 +8,8 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+
+  const auth = useContext(AuthContext)
 
   const history = useHistory();
 
@@ -17,17 +20,15 @@ const SignUp = () => {
     console.log(post);
 
     try {
-      await fetch("http://localhost:5000/api/users/signup", {
+      const response = await fetch("http://localhost:5000/api/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(post),
-      })
-        .then(() => {
-          history.push("/login");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      });
+      const responseData = await response.json();
+      auth.login(responseData.userId);
+      history.push('/');
+           
     } catch (err) {}
   };
 

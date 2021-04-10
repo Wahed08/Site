@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { makeStyles } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
@@ -13,6 +13,7 @@ import {
   ExitToAppOutlined,
 } from "@material-ui/icons";
 import { useHistory, useLocation } from "react-router-dom";
+import { AuthContext } from '../context/auth-context';
 
 const drawerWidth = 130;
 
@@ -46,6 +47,8 @@ const Layout = ({ children }) => {
   const history = useHistory();
   const location = useLocation();
 
+  const auth = useContext(AuthContext);
+
   const menuItems = [
     {
       text: "My Post",
@@ -66,7 +69,7 @@ const Layout = ({ children }) => {
       text: "Log Out",
       icon: <ExitToAppOutlined color="primary" />,
       path: "/about",
-    },
+    }
   ];
 
   return (
@@ -84,7 +87,7 @@ const Layout = ({ children }) => {
 
         {/* List Item */}
         <List>
-          {menuItems.map((item) => (
+          {auth.isLoggedIn && menuItems.map((item) => (
             <ListItem
               button
               key={item.text}
