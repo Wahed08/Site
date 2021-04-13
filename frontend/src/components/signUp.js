@@ -10,7 +10,6 @@ const SignUp = () => {
   const [password2, setPassword2] = useState("");
 
   const auth = useContext(AuthContext)
-
   const history = useHistory();
 
   const formHandler = async (e) => {
@@ -26,6 +25,11 @@ const SignUp = () => {
         body: JSON.stringify(post),
       });
       const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
       auth.login(responseData.userId);
       history.push('/');
            

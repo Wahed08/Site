@@ -36,6 +36,16 @@ const Posts = () => {
     setPosts(newPost);
   };
 
+  if (posts.length === 0) {
+    return (
+      <div className="container">
+        <div className="row align-items-center justify-content-center">
+          <h2>Oops!! Not Found</h2>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <React.Fragment>
       <Container>
@@ -50,9 +60,10 @@ const Posts = () => {
             posts.map((post) => (
               <Grid item xs={12} md={6} lg={4} key={post.id}>
                 <PostCard
-                  key={post.id}
+                  post={post}
                   title={post.title}
                   postdetails={post.details}
+                  category={post.category}
                   author={post.author}
                   handleDelete={handleDelete}
                 />

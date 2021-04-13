@@ -4,38 +4,59 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
+// import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from "@material-ui/core";
-// import { blue } from "@material-ui/core/colors";
+import { MoreVert } from "@material-ui/icons";
+import { blue, yellow, green, pink } from "@material-ui/core/colors";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles({
   avatar: {
-    paddingTop: "20px"
+    paddingTop: "20px",
+  },
+  avatarIcon: {
+    backgroundColor: (post) => {
+      if (post.category === "recipe") {
+        return yellow[700];
+      }
+      if (post.category === "photography") {
+        return green[500];
+      }
+      if (post.category === "buy_Sell") {
+        return pink[500];
+      }
+      return blue[500];
+    },
   },
 });
 
-const PostCard = (props) => {
-  const classes = useStyles();
+const PostCard = ({post}) => {
+  const classes = useStyles(post);
 
   return (
     <div className={classes.avatar}>
-    <Card elevation={6}>
-      <CardHeader
-        action={
-          <IconButton onClick={() => props.handleDelete(props.key)}>
-            <DeleteOutlined />
-          </IconButton>
-        }
-        title={props.title}
-        subheader={"By " + props.author}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary">
-          { props.postdetails }
-        </Typography>
-      </CardContent>
-    </Card>
-  </div>
+      <Card elevation={6}>
+        <CardHeader
+          avatar={
+            <Avatar className={classes.avatarIcon}>
+              {post.category[0].toUpperCase()}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVert />
+            </IconButton>
+          }
+          title={post.title}
+          subheader={post.category}
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary">
+            {post.details}
+          </Typography>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

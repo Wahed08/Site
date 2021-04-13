@@ -1,32 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { AuthContext } from '../components/context/auth-context';
 
 const LogIn = () => {
+  
+  const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const history = useHistory();
 
   const HandleSubmit = async (e) => {
-    e.prevenrDefault();
+    e.preventDefault();
 
     const post = { email, password };
     console.log(post);
 
     try {
-      await fetch("http://localhost:5000/api/users/login", {
+      const response = await fetch("http://localhost:5000/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(post),
-      })
-        .then(() => {
-          history.push("/");
-        })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("This is not happening, Why?");
-          }
-        });
+      });
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      auth.login(responseData.userId);
+      history.push('/');
     } catch (err) {}
   };
 

@@ -31,7 +31,7 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userId, setUserId] = useState(false);
 
   const login = useCallback((uid) => {
