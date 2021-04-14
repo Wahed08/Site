@@ -73,7 +73,7 @@ const signUp = async (req, res, next) => {
     );
     return next(error);
   }
-  
+
   res.status(201).json({Message: "Sign Up Succesful"});
 };
 
@@ -124,7 +124,7 @@ const login = async (req, res, next) => {
   try{
     token = jwt.sign(
       {userId: existingUser.id, email: existingUser.email},
-      "amar_code_mile_na_kno",
+      process.env.Secret_Key,
       {expiresIn: "1hr"}
     )
   }catch(err){
