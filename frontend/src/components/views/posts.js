@@ -36,42 +36,37 @@ const Posts = () => {
     setPosts(newPost);
   };
 
-  if (posts.length === 0) {
-    return (
-      <div className="container">
-        <div className="row align-items-center justify-content-center">
-          <h2>Oops!! Not Found</h2>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <React.Fragment>
-      <Container>
-        {isLoading && (
-          <div className="center">
-            <LoadingSpinner asOverlay />
+    <Container>
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner asOverlay />
+        </div>
+      )}
+      <Grid container spacing={4}>
+        {!isLoading &&
+          posts &&
+          posts.map((post) => (
+            <Grid item xs={12} md={6} lg={4} key={post.id}>
+              <PostCard
+                post={post}
+                title={post.title}
+                postdetails={post.details}
+                category={post.category}
+                author={post.author}
+                handleDelete={handleDelete}
+              />
+            </Grid>
+          ))}
+        {!isLoading && !posts.length && (
+          <div className="container">
+            <div className="row align-items-center justify-content-center p-4">
+              <h2>Oops!! Not Found</h2>
+            </div>
           </div>
         )}
-        <Grid container spacing={4}>
-          {!isLoading &&
-            posts &&
-            posts.map((post) => (
-              <Grid item xs={12} md={6} lg={4} key={post.id}>
-                <PostCard
-                  post={post}
-                  title={post.title}
-                  postdetails={post.details}
-                  category={post.category}
-                  author={post.author}
-                  handleDelete={handleDelete}
-                />
-              </Grid>
-            ))}
-        </Grid>
-      </Container>
-    </React.Fragment>
+      </Grid>
+    </Container>
   );
 };
 

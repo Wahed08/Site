@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -13,6 +13,7 @@ import Footer from "./components/footer/footer";
 import Layout from "./components/Layout/Layout";
 import Create from "./components/views/create";
 import Posts from "./components/views/Posts";
+import Account from './components/account/account';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 import { AuthContext } from "./components/context/auth-context";
@@ -31,22 +32,36 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [userId, setUserId] = useState(false);
 
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
+  const [userId, setUserId] = useState(false);
+  const [token, setToken] = useState(false);
+
+  const login = useCallback((uid, token) => {
+    setToken(token);
     setUserId(uid);
+
+    localStorage.setItem(
+      'Data',
+      JSON.stringify({ userId: uid, token: token })
+    );
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
     setUserId(null)
+    localStorage.removeItem('Data');
   }, []);
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('Data'));
+    if (storedData && storedData.token) {
+      login(storedData.userId, storedData.token);
+    }
+  }, [login]);
 
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route exact path="/">
@@ -61,12 +76,16 @@ function App() {
           <Login />
         </Route>
 
-        <Route path="/create">
+        <Route path="/post/create">
           <Create />
         </Route>
 
         <Route path="/posts">
           <Posts />
+        </Route>
+
+        <Route path="/:userId/account">
+          <Account />
         </Route>
 
         <Redirect to="/" />
@@ -93,7 +112,8 @@ function App() {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token,
+        token: token,
         userId: userId,
         login: login,
         logout: logout,

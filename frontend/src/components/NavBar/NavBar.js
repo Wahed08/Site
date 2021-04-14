@@ -26,7 +26,7 @@ const NavBar = () => {
             <button className="btn btn-outline-secondary">Contact Us</button>
           </Link>
           <Link to="/">
-            <button className="btn btn-outline-secondary">Profile</button>
+            <button className="btn btn-outline-secondary">Company</button>
           </Link>
         </div>
         <div className="links">

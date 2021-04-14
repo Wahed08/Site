@@ -11,6 +11,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import { useHistory } from "react-router-dom";
+import ErrorModal from "../account/ErrorModal";
 
 const useStyles = makeStyles({
   field: {
@@ -30,8 +31,9 @@ export default function Create() {
   const [detailsError, setDetailsError] = useState(false);
   const [authorError, setAuthorError] = useState(false);
   const [category, setCategory] = useState("photography");
+  const [error, setError] = useState();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setTitleError(false);
     setDetailsError(false);
@@ -48,18 +50,31 @@ export default function Create() {
     }
     try {
       if (title && details && author) {
-        fetch("http://localhost:5000/api/posts/create", {
+        const response = await fetch("http://localhost:5000/api/posts/create", {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({ title, details, author, category }),
-        }).then(() => history.push("/posts"));
+        });
+        const responseData = await response.json();
+        if(!response.ok){
+          history.push('/post/create');
+          setError(responseData.message);
+          
+        }else{
+          history.push('/posts');
+        }
       }
     } catch (err) {
       throw err;
     }
   };
+  if(error){
+    return(
+      <ErrorModal error={error}/>
+    )
+  }
 
-  return (
+  return (  
     <div className="container">
       <Container size="sm">
         <Typography

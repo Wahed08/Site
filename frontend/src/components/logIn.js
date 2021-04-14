@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from '../components/context/auth-context';
 
 const LogIn = () => {
-  
+
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +28,7 @@ const LogIn = () => {
         throw new Error(responseData.message);
       }
 
-      auth.login(responseData.userId);
+      auth.login(responseData.userId, responseData.token);
       history.push('/');
     } catch (err) {}
   };

@@ -58,15 +58,15 @@ const Layout = ({ children }) => {
     {
       text: "Create Post",
       icon: <AddCircleOutlineOutlined color="primary" />,
-      path: "/create",
+      path: "/post/create",
     },
     {
       text: "My Account",
       icon: <AccountCircleOutlined color="primary" />,
-      path: "/",
+      path: `/${auth.userId}/account`,
     },
     {
-      text: "Log Out",
+      text: "Delete Account",
       icon: <ExitToAppOutlined color="primary" />,
       path: "/about",
     }
