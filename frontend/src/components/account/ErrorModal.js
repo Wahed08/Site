@@ -3,11 +3,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ErrorModal = ({ error }) => {
-
+  const customId = "";
   return (
     <div>
-      {toast.info(error, { position: toast.POSITION.TOP_CENTER, autoClose: false})}
-      <ToastContainer className="foo" style={{ width: "300px"}} />
+      {toast.error(error, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: false,
+        toastId: customId,
+      })}
+      <ToastContainer style={{ width: "300px" , marginTop:"80px"}} />
     </div>
   );
 };

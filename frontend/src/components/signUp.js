@@ -28,7 +28,6 @@ const SignUp = () => {
       const responseData = await response.json();
 
       if (!response.ok) {
-        // throw new Error(responseData.message);
         setError(responseData.message);
       }
       auth.login(responseData.userId);

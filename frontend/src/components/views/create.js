@@ -56,111 +56,107 @@ export default function Create() {
           body: JSON.stringify({ title, details, author, category }),
         });
         const responseData = await response.json();
-        if(!response.ok){
-          history.push('/post/create');
+        if (!response.ok) {
           setError(responseData.message);
-          
-        }else{
-          history.push('/posts');
+        } else {
+          history.push("/posts");
         }
       }
     } catch (err) {
       throw err;
     }
   };
-  if(error){
-    return(
-      <ErrorModal error={error}/>
-    )
-  }
 
-  return (  
-    <div className="container">
-      <Container size="sm">
-        <Typography
-          variant="h4"
-          color="textSecondary"
-          component="h2"
-          gutterBottom
-        >
-          Share a Post
-        </Typography>
-
-        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-          <TextField
-            className={classes.field}
-            onChange={(e) => setTitle(e.target.value)}
-            label="Post Title"
-            variant="outlined"
-            color="secondary"
-            fullWidth
-            required
-            error={titleError}
-          />
-          <TextField
-            className={classes.field}
-            onChange={(e) => setDetails(e.target.value)}
-            label="Post Details"
-            variant="outlined"
-            color="secondary"
-            multiline
-            rows={4}
-            fullWidth
-            required
-            error={detailsError}
-          />
-
-          <TextField
-            className={classes.field}
-            onChange={(e) => setAuthor(e.target.value)}
-            label="Author"
-            variant="outlined"
-            color="secondary"
-            fullWidth
-            required
-            error={authorError}
-          />
-
-          <FormControl className={classes.field}>
-            <FormLabel>Post Category</FormLabel>
-            <RadioGroup
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <FormControlLabel
-                value="recipe"
-                control={<Radio />}
-                label="Recipe"
-              />
-              <FormControlLabel
-                value="photography"
-                control={<Radio />}
-                label="Photograpy"
-              />
-              <FormControlLabel
-                value="buy_Sell"
-                control={<Radio />}
-                label="Buy & Sell"
-              />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="Other"
-              />
-            </RadioGroup>
-          </FormControl>
-
-          <Button
-            className={classes.align}
-            type="submit"
-            color="primary"
-            variant="contained"
-            endIcon={<KeyboardArrowRightIcon />}
+  return (
+    <React.Fragment>
+      <ErrorModal error={error} />
+      <div className="container">
+        <Container size="sm">
+          <Typography
+            variant="h4"
+            color="textSecondary"
+            component="h2"
+            gutterBottom
           >
-            Submit
-          </Button>
-        </form>
-      </Container>
-    </div>
+            Share a Post
+          </Typography>
+
+          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <TextField
+              className={classes.field}
+              onChange={(e) => setTitle(e.target.value)}
+              label="Post Title"
+              variant="outlined"
+              color="secondary"
+              fullWidth
+              required
+              error={titleError}
+            />
+            <TextField
+              className={classes.field}
+              onChange={(e) => setDetails(e.target.value)}
+              label="Post Details"
+              variant="outlined"
+              color="secondary"
+              multiline
+              rows={4}
+              fullWidth
+              required
+              error={detailsError}
+            />
+
+            <TextField
+              className={classes.field}
+              onChange={(e) => setAuthor(e.target.value)}
+              label="Author"
+              variant="outlined"
+              color="secondary"
+              fullWidth
+              required
+              error={authorError}
+            />
+
+            <FormControl className={classes.field}>
+              <FormLabel>Post Category</FormLabel>
+              <RadioGroup
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <FormControlLabel
+                  value="recipe"
+                  control={<Radio />}
+                  label="Recipe"
+                />
+                <FormControlLabel
+                  value="photography"
+                  control={<Radio />}
+                  label="Photograpy"
+                />
+                <FormControlLabel
+                  value="buy_Sell"
+                  control={<Radio />}
+                  label="Buy & Sell"
+                />
+                <FormControlLabel
+                  value="other"
+                  control={<Radio />}
+                  label="Other"
+                />
+              </RadioGroup>
+            </FormControl>
+
+            <Button
+              className={classes.align}
+              type="submit"
+              color="primary"
+              variant="contained"
+              endIcon={<KeyboardArrowRightIcon />}
+            >
+              Submit
+            </Button>
+          </form>
+        </Container>
+      </div>
+    </React.Fragment>
   );
 }
