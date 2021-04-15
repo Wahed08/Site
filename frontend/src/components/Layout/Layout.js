@@ -66,7 +66,7 @@ const Layout = ({ children }) => {
       path: `/${auth.userId}/account`,
     },
     {
-      text: "Delete Account",
+      text: "Settings",
       icon: <ExitToAppOutlined color="primary" />,
       path: "/about",
     }

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../components/context/auth-context";
-import ErrorModal from '../components/account/ErrorModal';
+import ErrorModal from './ShowError/ErrorModal';
 
 const LogIn = () => {
   const auth = useContext(AuthContext);

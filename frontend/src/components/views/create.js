@@ -11,7 +11,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import { useHistory } from "react-router-dom";
-import ErrorModal from "../account/ErrorModal";
+import ErrorModal from "../ShowError/ErrorModal";
 
 const useStyles = makeStyles({
   field: {

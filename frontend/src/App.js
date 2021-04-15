@@ -13,7 +13,7 @@ import Footer from "./components/footer/footer";
 import Layout from "./components/Layout/Layout";
 import Create from "./components/views/create";
 import Posts from "./components/views/Posts";
-import Account from './components/account/account';
+import FetchUser from './components/account/fetchUser';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 import { AuthContext } from "./components/context/auth-context";
@@ -85,7 +85,7 @@ function App() {
         </Route>
 
         <Route path="/:userId/account">
-          <Account />
+          <FetchUser />
         </Route>
 
         <Redirect to="/" />
