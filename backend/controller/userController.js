@@ -2,7 +2,31 @@ const User = require("../model/userModel");
 const bcrypt = require("bcryptjs");
 const HttpError = require("../model/http-error");
 const { validationResult } = require("express-validator");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+
+//User Fetching
+const getUsers = async (req, res, next) => {
+  const userId = req.params.uid;
+
+  let users;
+  try {
+    users = await User.findById(userId);
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching users failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+  if (!users) {
+    const error = new HttpError(
+      "Could not find a user for the provided id.",
+      404
+    );
+    return next(error);
+  }
+  res.json({ users: users});
+};
 
 //user SignUp
 const signUp = async (req, res, next) => {
@@ -17,9 +41,9 @@ const signUp = async (req, res, next) => {
   const { name, email, password, password2 } = req.body;
 
   //password match
-  if(password !== password2){
+  if (password !== password2) {
     const error = new HttpError(
-      'Password does not match, please try again',
+      "Password does not match, please try again",
       423
     );
     return next(error);
@@ -74,7 +98,7 @@ const signUp = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({Message: "Sign Up Succesful"});
+  res.status(201).json({ Message: "Sign Up Succesful" });
 };
 
 // log In
@@ -121,23 +145,26 @@ const login = async (req, res, next) => {
   }
   //token
   let token;
-  try{
+  try {
     token = jwt.sign(
-      {userId: existingUser.id, email: existingUser.email},
+      { userId: existingUser.id, email: existingUser.email },
       process.env.Secret_Key,
-      {expiresIn: "1hr"}
-    )
-  }catch(err){
+      { expiresIn: "1hr" }
+    );
+  } catch (err) {
     const error = new HttpError(
-      'Logging in failed, please try again later',
+      "Logging in failed, please try again later",
       500
-      );
-      return next(error);
+    );
+    return next(error);
   }
-  res.status(201).json({userId: existingUser.id, email: existingUser.email, token: token});
+  res
+    .status(201)
+    .json({ userId: existingUser.id, email: existingUser.email, token: token });
 };
 
 module.exports = {
+  getUsers,
   signUp,
   login,
 };
