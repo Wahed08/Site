@@ -4,7 +4,22 @@ const HttpError = require("../model/http-error");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
-//User Fetching
+//Users Fetching
+const getUsersAll = async (req, res, next) => {
+  let usersAll;
+  try {
+    usersAll = await User.find({}, "-password");
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching users failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+  res.json({ usersAll: usersAll.map((user) => user.toObject({ getters: true }))});
+};
+
+//User Fetching By Id
 const getUsers = async (req, res, next) => {
   const userId = req.params.uid;
 
@@ -163,8 +178,35 @@ const login = async (req, res, next) => {
     .json({ userId: existingUser.id, email: existingUser.email, token: token });
 };
 
+
+//deletePlace
+const deleteUser = async (req, res, next) => {
+  const userId = req.params.uid;
+
+  let user;
+  try {
+    user = await User.findByIdAndDelete(userId);
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete user.',
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError('Could not find user for this id.', 404);
+    return next(error);
+  }
+
+
+  res.status(200).json({ message: 'Deleted User.' });
+};
+
 module.exports = {
+  getUsersAll,
   getUsers,
   signUp,
   login,
+  deleteUser
 };

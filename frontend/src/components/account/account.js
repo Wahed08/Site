@@ -21,8 +21,9 @@ const useStyles = makeStyles({
   },
 });
 
-const Account = ({user}) => {
+const Account = ({user, handleDelete, userId}) => {
   const classes = useStyles();
+
   return (
     <div>
       <Card className={classes.root}>
@@ -45,7 +46,7 @@ const Account = ({user}) => {
           <Button variant="contained" size="small" color="primary">
             Edit
           </Button>
-          <Button size="small"  variant="contained" color="secondary">
+          <Button size="small"  variant="contained" color="secondary" onClick={()=>handleDelete(userId)}>
             Delete
           </Button>
         </CardActions>
