@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import PostCard from "./PostCard";
@@ -7,6 +8,7 @@ import LoadingSpinner from "../util/LoadingSpinner";
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     setIsLoading(true);
@@ -29,11 +31,12 @@ const Posts = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    await fetch("http://localhost:5000/api/posts/" + id, {
+    await fetch(`http://localhost:5000/api/posts/${id}`, {
       method: "DELETE",
     });
     const newPost = posts.filter((post) => post.id !== id);
     setPosts(newPost);
+    history.push('/posts');
   };
 
   return (
@@ -50,10 +53,6 @@ const Posts = () => {
             <Grid item xs={12} md={6} lg={4} key={post.id}>
               <PostCard
                 post={post}
-                title={post.title}
-                postdetails={post.details}
-                category={post.category}
-                author={post.author}
                 handleDelete={handleDelete}
               />
             </Grid>

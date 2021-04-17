@@ -28,6 +28,9 @@ const theme = createMuiTheme({
     fontWeightRegular: 500,
     fontWeightMedium: 600,
     fontWeightBold: 700,
+    button: {
+      textTransform: 'none'
+    }
   },
 });
 

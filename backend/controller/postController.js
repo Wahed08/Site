@@ -42,11 +42,14 @@ const AllPost = async (req, res, next) => {
   }
 
   if (!All) {
-    const error = new HttpError("You do not have any post, create new one", 402);
+    const error = new HttpError(
+      "You do not have any post, create new one",
+      402
+    );
     return next(error);
   }
 
-  res.status(200).json({ All_post: All });
+  res.status(200).json({ All_post: All.map((user) => user.toObject({ getters: true }))});
 };
 
 //createPost
@@ -58,7 +61,7 @@ const createPost = async (req, res, next) => {
     );
   }
 
-  const { title, details, category ,author } = req.body;
+  const { title, details, category, author } = req.body;
 
   const createdPost = new Post({
     title,
@@ -80,8 +83,32 @@ const createPost = async (req, res, next) => {
   res.status(201).json({ Post: createdPost });
 };
 
+//delete Post
+const deletePost = async (req, res, next) => {
+  const postId = req.params.pid;
+
+  let post;
+  try {
+    post = await Post.findByIdAndDelete(postId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not delete post.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!post) {
+    const error = new HttpError("Could not find post for this id.", 404);
+    return next(error);
+  }
+
+  res.status(200).json({ message: "Deleted Post." });
+};
+
 module.exports = {
   getPostById,
   createPost,
   AllPost,
+  deletePost,
 };

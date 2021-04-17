@@ -179,7 +179,7 @@ const login = async (req, res, next) => {
 };
 
 
-//deletePlace
+//deleteUser
 const deleteUser = async (req, res, next) => {
   const userId = req.params.uid;
 

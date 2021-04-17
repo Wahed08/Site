@@ -19,6 +19,9 @@ const useStyles = makeStyles({
     marginBottom: 20,
     display: "block",
   },
+  align:{
+    marginLeft: "20px"
+  }
 });
 
 export default function Create() {
@@ -144,6 +147,11 @@ export default function Create() {
                 />
               </RadioGroup>
             </FormControl>
+
+            <Button variant="contained" component="label" >
+              Upload Image
+              <input type="file" name="image" hidden/>
+            </Button>
 
             <Button
               className={classes.align}

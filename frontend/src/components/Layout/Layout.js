@@ -24,6 +24,7 @@ const useStyles = makeStyles({
   },
   drawer: {
     width: drawerWidth,
+    height: "100%"
   },
   drawerPaper: {
     width: drawerWidth,

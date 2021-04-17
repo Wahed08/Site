@@ -7,7 +7,7 @@ const ErrorModal = ({ error }) => {
   return (
     <div>
       {toast.error(error, {
-        position: toast.POSITION.TOP_CENTER,
+        position: toast.POSITION.TOP_RIGHT,
         autoClose: false,
         toastId: customId,
       })}
