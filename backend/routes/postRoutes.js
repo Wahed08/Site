@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post(
   "/create",
-  fileUpload.single("image"),
+  fileUpload.single('image'),
   [
     check("title").not().isEmpty(),
     check("details").isLength({ min: 12 }),
@@ -16,6 +16,7 @@ router.post(
   ],
   postController.createPost
 );
+
 router.get("/:pid", postController.getPostById);
 router.get("/", postController.AllPost);
 router.delete("/:pid",postController.deletePost);

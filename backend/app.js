@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
@@ -10,6 +11,8 @@ require('dotenv').config();
 const app = express();
 
 //middleware
+app.use(morgan("dev"));
+app.use(bodyParser.urlencoded({extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -32,8 +35,7 @@ app.use((error, req, res, next) => {
     }
     res.status(error.code || 500);
     res.json({ message: error.message || "An unknown error occurred!" });
-  });
-
+});
 
 const Database_URL = process.env.DB_URL;
 const port = process.env.PORT
