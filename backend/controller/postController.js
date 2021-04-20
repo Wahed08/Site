@@ -68,6 +68,7 @@ const createPost = async (req, res, next) => {
     details,
     category,
     author,
+    image: req.file.path
   });
 
   try {

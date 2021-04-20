@@ -13,6 +13,7 @@ const app = express();
 //middleware
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: false }));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json());
 app.use(cors());
 

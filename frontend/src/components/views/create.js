@@ -19,9 +19,9 @@ const useStyles = makeStyles({
     marginBottom: 20,
     display: "block",
   },
-  align:{
-    marginLeft: "20px"
-  }
+  align: {
+    marginLeft: "20px",
+  },
 });
 
 export default function Create() {
@@ -35,12 +35,14 @@ export default function Create() {
   const [authorError, setAuthorError] = useState(false);
   const [category, setCategory] = useState("photography");
   const [error, setError] = useState();
+  const [file, setFile] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTitleError(false);
     setDetailsError(false);
     setAuthorError(false);
+    console.log(file);
 
     if (title === "") {
       setTitleError(true);
@@ -53,17 +55,24 @@ export default function Create() {
     }
     try {
       if (title && details && author) {
-        const response = await fetch("http://localhost:5000/api/posts/create", {
+        const formData = new FormData();
+
+        formData.append("title", title);
+        formData.append("details", details);
+        formData.append("author", author);
+        formData.append("category", category);
+        formData.append("image", file);
+
+        await fetch("http://localhost:5000/api/posts/create", {
           method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ title, details, author, category }),
+          body: formData,
+        }).then((response) => {
+          if (!response.ok) {
+            setError("Invalid inputs passed, please check your data.");
+          } else {
+            history.push("/posts");
+          }
         });
-        const responseData = await response.json();
-        if (!response.ok) {
-          setError(responseData.message);
-        } else {
-          history.push("/posts");
-        }
       }
     } catch (err) {
       throw err;
@@ -84,7 +93,12 @@ export default function Create() {
             Share a Post
           </Typography>
 
-          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <form
+            noValidate
+            autoComplete="off"
+            encType="multipart/form-data"
+            onSubmit={handleSubmit}
+          >
             <TextField
               className={classes.field}
               onChange={(e) => setTitle(e.target.value)}
@@ -148,9 +162,16 @@ export default function Create() {
               </RadioGroup>
             </FormControl>
 
-            <Button variant="contained" component="label" >
+            <Button variant="contained" component="label">
               Upload Image
-              <input type="file" name="image" hidden/>
+              <input
+                type="file"
+                name="image"
+                accept=".jpg,.png,.jpeg"
+                hidden
+                onChange={(e) => setFile(e.target.files[0])}
+                required
+              />
             </Button>
 
             <Button
