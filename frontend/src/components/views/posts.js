@@ -54,6 +54,7 @@ const Posts = () => {
               <PostCard
                 post={post}
                 handleDelete={handleDelete}
+                image = {post.image}
               />
             </Grid>
           ))}

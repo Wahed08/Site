@@ -54,7 +54,7 @@ export default function Create() {
       setAuthorError(true);
     }
     try {
-      if (title && details && author) {
+      if (title && details && author && file) {
         const formData = new FormData();
 
         formData.append("title", title);
@@ -63,13 +63,14 @@ export default function Create() {
         formData.append("category", category);
         formData.append("image", file);
 
-        await fetch("http://localhost:5000/api/posts/create", {
+         await fetch("http://localhost:5000/api/posts/create", {
           method: "POST",
           body: formData,
         }).then((response) => {
           if (!response.ok) {
             setError("Invalid inputs passed, please check your data.");
-          } else {
+          } 
+          else {
             history.push("/posts");
           }
         });

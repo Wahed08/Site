@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import CardMedia from '@material-ui/core/CardMedia';
+import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
@@ -11,7 +11,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { Button, makeStyles } from "@material-ui/core";
 import { blue, yellow, green, pink } from "@material-ui/core/colors";
 import Avatar from "@material-ui/core/Avatar";
-import image from "../../img/high.jpg";
+// import image from "../../img/high.jpg";
 
 const useStyles = makeStyles({
   avatar: {
@@ -32,13 +32,13 @@ const useStyles = makeStyles({
     },
   },
   media: {
-    height: 0,
-    paddingTop: '55%', 
+     paddingTop: "55%",
   },
 });
 
-const PostCard = ({ post, handleDelete}) => {
+const PostCard = ({ post, handleDelete, image }) => {
   const classes = useStyles(post);
+  console.log(image);
 
   return (
     <div className={classes.avatar}>
@@ -52,16 +52,16 @@ const PostCard = ({ post, handleDelete}) => {
           action={
             <IconButton aria-label="settings">
               {/* <MoreVertIcon /> */}
-              </IconButton>
+            </IconButton>
           }
           title={post.title}
           subheader={post.category}
         />
-         <CardMedia
-        className={classes.media}
-        image={image}
-        title="Paella dish"
-      />
+        <CardMedia
+          className={classes.media}
+          image={`https://source.unsplash.com/WLUHO9A_xik/1600x900`}
+          title="Media"
+        />
         <Button color="cyan">
           <CardContent>
             <Typography variant="body2" color="textSecondary">
@@ -73,7 +73,10 @@ const PostCard = ({ post, handleDelete}) => {
           <IconButton aria-label="Edit">
             <EditIcon />
           </IconButton>
-          <IconButton aria-label="Delete" onClick={()=>handleDelete(post._id)}>
+          <IconButton
+            aria-label="Delete"
+            onClick={() => handleDelete(post._id)}
+          >
             <DeleteOutlined />
           </IconButton>
         </CardActions>
