@@ -14,6 +14,7 @@ import Layout from "./components/Layout/Layout";
 import Create from "./components/views/create";
 import Posts from "./components/views/Posts";
 import FetchUser from './components/account/fetchUser';
+import UpdatePost from './components/views/UpdatePost';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 import { AuthContext } from "./components/context/auth-context";
@@ -81,6 +82,10 @@ function App() {
 
         <Route path="/post/create">
           <Create />
+        </Route>
+
+        <Route path="/post/:postId/update">
+          <UpdatePost />
         </Route>
 
         <Route path="/posts">

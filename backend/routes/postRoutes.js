@@ -17,6 +17,15 @@ router.post(
   postController.createPost
 );
 
+router.patch(
+  "/:pid",
+  [
+    check("title").not().isEmpty(),
+    check("details").isLength({ min: 12 }),
+  ],
+  postController.updatePost
+);
+
 router.get("/:pid", postController.getPostById);
 router.get("/", postController.AllPost);
 router.delete("/:pid",postController.deletePost);

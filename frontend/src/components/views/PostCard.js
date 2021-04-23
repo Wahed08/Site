@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
@@ -11,7 +12,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import { Button, makeStyles } from "@material-ui/core";
 import { blue, yellow, green, pink } from "@material-ui/core/colors";
 import Avatar from "@material-ui/core/Avatar";
-// import image from "../../img/high.jpg";
 
 const useStyles = makeStyles({
   avatar: {
@@ -32,13 +32,14 @@ const useStyles = makeStyles({
     },
   },
   media: {
-     paddingTop: "55%",
+    paddingTop: "55%",
   },
 });
 
 const PostCard = ({ post, handleDelete, image }) => {
   const classes = useStyles(post);
-  console.log(image);
+
+  const history = useHistory();
 
   return (
     <div className={classes.avatar}>
@@ -70,7 +71,10 @@ const PostCard = ({ post, handleDelete, image }) => {
           </CardContent>
         </Button>
         <CardActions disableSpacing>
-          <IconButton aria-label="Edit">
+          <IconButton
+            aria-label="Edit"
+            onClick={() => history.push(`/post/${post._id}/update`)}
+          >
             <EditIcon />
           </IconButton>
           <IconButton

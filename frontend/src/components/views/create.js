@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Create() {
+const Create = () => {
   const classes = useStyles();
   const history = useHistory();
   const [title, setTitle] = useState("");
@@ -190,3 +190,5 @@ export default function Create() {
     </React.Fragment>
   );
 }
+
+export default Create;

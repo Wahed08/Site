@@ -84,6 +84,45 @@ const createPost = async (req, res, next) => {
   res.status(201).json({ Post: createdPost });
 };
 
+//update post
+const updatePost = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError('Invalid inputs passed, please check your data.', 422)
+    );
+  }
+
+  const { title, details } = req.body;
+  const postId = req.params.pid;
+
+  let post;
+  try {
+    post = await Post.findById(postId);
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not update post.',
+      500
+    );
+    return next(error);
+  }
+
+  post.title = title;
+  post.details = details;
+
+  try {
+    await post.save();
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not update post.',
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ updatePost: post});
+};
+
 //delete Post
 const deletePost = async (req, res, next) => {
   const postId = req.params.pid;
@@ -110,6 +149,7 @@ const deletePost = async (req, res, next) => {
 module.exports = {
   getPostById,
   createPost,
+  updatePost,
   AllPost,
   deletePost,
 };
