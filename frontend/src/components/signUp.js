@@ -31,8 +31,8 @@ const SignUp = () => {
         setError(responseData.message);
       }
       auth.login(responseData.userId);
-      if(response.ok){
-      history.push("/login");
+      if (response.ok) {
+        history.push("/login");
       }
     } catch (err) {
       setError(err.message);
