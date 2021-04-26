@@ -18,7 +18,7 @@ router.post(
 );
 
 router.patch(
-  "/:pid",
+  "/update/:pid",
   [
     check("title").not().isEmpty(),
     check("details").isLength({ min: 12 }),
