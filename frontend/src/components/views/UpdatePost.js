@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -7,6 +7,8 @@ import { makeStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { useParams, useHistory } from "react-router-dom";
 import ErrorModal from "../ShowError/ErrorModal";
+import LoadingSpinner from "../util/LoadingSpinner";
+import { AuthContext } from "../context/auth-context";
 
 const useStyles = makeStyles({
   field: {
@@ -20,14 +22,17 @@ const useStyles = makeStyles({
 });
 
 const UpdatePost = () => {
+  const auth = useContext(AuthContext);
   const classes = useStyles();
   const postId = useParams().postId;
   const [error, setError] = useState();
   const [title, setTitle] = useState();
   const [details, setDetails] = useState();
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchUser = async () => {
       try {
         const Data = await fetch(`http://localhost:5000/api/posts/${postId}`);
@@ -40,7 +45,9 @@ const UpdatePost = () => {
         if (!Data.ok) {
           throw new Error(responseData.message);
         }
+        setIsLoading(false);
       } catch (err) {
+        setIsLoading(false);
         throw err;
       }
     };
@@ -57,8 +64,11 @@ const UpdatePost = () => {
           `http://localhost:5000/api/posts/update/${postId}`,
           {
             method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(update)
+            body: JSON.stringify(update),
+            headers: {
+              "Content-Type": "application/json",
+               Authorization: "Bearer " + auth.token,
+            },
           }
         );
         const responseData = await response.json();
@@ -78,6 +88,11 @@ const UpdatePost = () => {
 
   return (
     <React.Fragment>
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner asOverlay />
+        </div>
+      )}
       <ErrorModal error={error} />
       <div className="container">
         <Container size="sm">
@@ -99,7 +114,7 @@ const UpdatePost = () => {
             <TextField
               className={classes.field}
               label="Post Title"
-              InputLabelProps={{shrink: true}}
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               color="secondary"
               fullWidth
@@ -110,7 +125,7 @@ const UpdatePost = () => {
             <TextField
               className={classes.field}
               label="Post Details"
-              InputLabelProps={{shrink: true}}
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               color="secondary"
               multiline

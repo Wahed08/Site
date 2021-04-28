@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -12,6 +12,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import { useHistory } from "react-router-dom";
 import ErrorModal from "../ShowError/ErrorModal";
+import { AuthContext } from "../context/auth-context";
 
 const useStyles = makeStyles({
   field: {
@@ -37,12 +38,13 @@ const Create = () => {
   const [error, setError] = useState();
   const [file, setFile] = useState();
 
+  const auth = useContext(AuthContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTitleError(false);
     setDetailsError(false);
     setAuthorError(false);
-    console.log(file);
 
     if (title === "") {
       setTitleError(true);
@@ -63,14 +65,13 @@ const Create = () => {
         formData.append("category", category);
         formData.append("image", file);
 
-         await fetch("http://localhost:5000/api/posts/create", {
+        await fetch("http://localhost:5000/api/posts/create", {
           method: "POST",
           body: formData,
         }).then((response) => {
           if (!response.ok) {
             setError("Invalid inputs passed, please check your data.");
-          } 
-          else {
+          } else {
             history.push("/posts");
           }
         });
@@ -189,6 +190,6 @@ const Create = () => {
       </div>
     </React.Fragment>
   );
-}
+};
 
 export default Create;

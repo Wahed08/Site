@@ -18,7 +18,7 @@ router.post(
 );
 
 router.patch(
-  "/update/:pid",
+  "/update/:pid",auth,
   [
     check("title").not().isEmpty(),
     check("details").isLength({ min: 12 }),
@@ -28,6 +28,6 @@ router.patch(
 
 router.get("/:pid", postController.getPostById);
 router.get("/", postController.AllPost);
-router.delete("/:pid",postController.deletePost);
+router.delete("/:pid", auth, postController.deletePost);
 
 module.exports = router;
