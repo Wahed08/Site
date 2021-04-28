@@ -68,6 +68,9 @@ const Create = () => {
         await fetch("http://localhost:5000/api/posts/create", {
           method: "POST",
           body: formData,
+          headers:{
+            Authorization: "Bearer " + auth.token
+          }
         }).then((response) => {
           if (!response.ok) {
             setError("Invalid inputs passed, please check your data.");

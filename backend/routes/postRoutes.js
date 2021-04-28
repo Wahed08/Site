@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post(
   "/create",
+  auth,
   fileUpload.single('image'),
   [
     check("title").not().isEmpty(),
