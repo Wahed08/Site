@@ -1,6 +1,7 @@
 const Post = require("../model/postModel");
 const HttpError = require("../model/http-error");
 const { validationResult } = require("express-validator");
+const fs = require('fs');
 
 //getPostById
 const getPostById = async (req, res, next) => {
@@ -142,6 +143,11 @@ const deletePost = async (req, res, next) => {
     const error = new HttpError("Could not find post for this id.", 404);
     return next(error);
   }
+  const Path = post.image;
+
+  fs.unlink(Path, err => {
+    console.log(err);
+  });
 
   res.status(200).json({ message: "Deleted Post." });
 };
