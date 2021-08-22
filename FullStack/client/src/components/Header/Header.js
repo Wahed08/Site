@@ -3,12 +3,13 @@ import "./Header.css";
 
 const Header = () => {
   let url = "";
+  
   return (
     <div className="header">
       <div class="container">
         <nav class="main-nav">
           <a href={url}>
-            <h2>Website</h2>
+            <h2>CRUD App</h2>
           </a>
           <ul class="right-menu">
             <li>
