@@ -11,22 +11,6 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-  Date:{
-      type: Date,
-      default: Date.now
-  },
   profile: [
     {
       type: mongoose.Types.ObjectId,
