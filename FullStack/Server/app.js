@@ -2,16 +2,24 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const HttpError = require("./ErrorModel/errorModel");
+const userRoutes = require("./routes/userRoutes");
 require("dotenv").config();
 
 const app = express();
 
 //middleware
-
+app.use(bodyParser.json());
+app.use(cors());
 
 //routes
+app.use("/api/users", userRoutes);
 
 
+app.use((req, res, next) => {
+    const error = new HttpError("Could not find this route", 404);
+    return next(error);
+  });
 
 //error middleware
 app.use((error, req, res, next) => {
